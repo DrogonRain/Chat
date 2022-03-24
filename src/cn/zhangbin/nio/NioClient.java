@@ -24,9 +24,13 @@ public class NioClient {
                 Message message = new Message();
                 message.setUsername(name);
 
+                // 创建字节输出流
                 ByteArrayOutputStream bous = new ByteArrayOutputStream();
+                // 创建对象输出流
                 ObjectOutputStream oos = new ObjectOutputStream(bous);
+                // 将指定对象写到内存中
                 oos.writeObject(message);
+                // 将对象转为字节数组发送给服务器
                 socket.write(ByteBuffer.wrap(bous.toByteArray()));
             }
         }

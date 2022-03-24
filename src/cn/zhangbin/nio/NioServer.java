@@ -53,9 +53,13 @@ public class NioServer {
                     buffer.clear();
                     // 开始读取
                     channel.read(buffer);
+                    // 创建字节数组,参数大小为buffer中的字节数组
                     ByteArrayInputStream bius = new ByteArrayInputStream(buffer.array());
+                    // 创建对象输入流
                     ObjectInputStream ois = new ObjectInputStream(bius);
+                    // 在内存中读取对象,为避免NullPointerException使用Optional对象进行保存
                     Optional<Message> message = Optional.ofNullable((Message) ois.readObject());
+                    // 输出读取到的对象
                     message.ifPresent(m -> System.out.println(m.getUsername()));
                     // 从0开始到buffer指针所指向的位置结束
                     System.out.println(new String(buffer.array(),0,buffer.position()));
